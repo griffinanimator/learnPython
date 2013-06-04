@@ -1,0 +1,28 @@
+from maya import cmds, OpenMaya
+
+center =  'center'
+vtx = cmds.ls(sl=1, fl=1)
+
+for v in vtx:
+    cmds.select(cl=1)
+    jnt =  cmds.joint()
+    pos =  cmds.xform(v, q=1, ws=1, t=1)
+    cmds.xform(jnt, ws=1, t=pos)
+    posC =  cmds.xform(center, q=1, ws=1, t=1)
+    cmds.select(cl=1)
+    jntC =  cmds.joint()
+    cmds.xform(jntC, ws=1, t=posC)
+    cmds.parent(jnt, jntC)
+    cmds.joint(jntC, e=1, oj="xyz", secondaryAxisOrient="yup", ch=1)
+    
+    
+    
+sel = cmds.ls(sl=True)
+
+for s in sel:
+    loc =  cmds.spaceLocator()[0]
+    pos = cmds.xform(s, q=1, ws=1, t=1)
+    cmds.xform(loc, ws=1, t=1)
+    par = cmds.listRelatives(s, p=1)[0]
+
+     
